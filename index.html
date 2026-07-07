@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cricket Scorer Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Bebas+Neue&family=Anton&family=Oswald:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Teko:wght@400;600;700&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&family=Russo+One&family=Saira+Condensed:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;700;900&family=Noto+Serif+Bengali:wght@400;600;700&family=Baloo+Da+2:wght@400;500;600;700;800&family=Tiro+Bangla:ital@0;1&family=Galada&family=Atma:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 @font-face{font-family:'DSEG7';src:url('https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
 @font-face{font-family:'DSEG7';src:url('https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
@@ -1229,6 +1230,13 @@ body{background:var(--bg);font-family:'Rajdhani',sans-serif;color:var(--white);m
               <option value="'DSEG7',monospace">🔢 DSEG7 (Digital Clock/LCD)</option>
               <option value="Arial,sans-serif">Arial</option>
               <option value="Georgia,serif">Georgia</option>
+              <option value="'Hind Siliguri',sans-serif">🅱️ Hind Siliguri</option>
+              <option value="'Noto Sans Bengali',sans-serif">🅱️ Noto Sans Bengali</option>
+              <option value="'Noto Serif Bengali',serif">🅱️ Noto Serif Bengali</option>
+              <option value="'Baloo Da 2',cursive">🅱️ Baloo Da 2</option>
+              <option value="'Tiro Bangla',serif">🅱️ Tiro Bangla</option>
+              <option value="'Galada',cursive">🅱️ Galada (Stylish)</option>
+              <option value="'Atma',cursive">🅱️ Atma (Handwriting)</option>
             </select>
           </div>
           <div>
@@ -1329,6 +1337,57 @@ body{background:var(--bg);font-family:'Rajdhani',sans-serif;color:var(--white);m
           <input type="color" id="bg-custom-color" value="#07101f" style="width:36px;height:28px;border:none;border-radius:6px;cursor:pointer;background:none;" onchange="setDisplayBg(this.value,null)">
           <button class="mbtn-sec" onclick="setDisplayBg(document.getElementById('bg-custom-color').value,null)" style="font-size:10px;padding:5px 10px;">Apply</button>
         </div>
+
+        <div style="height:1px;background:var(--border);margin:12px 0;"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div class="mlbl2">📢 Advertisement (Full Screen)</div>
+          <button class="mbtn-sec" id="ad-toggle-btn" onclick="toggleAdOverlay()" style="min-width:56px;font-size:11px;padding:6px 12px;background:#2a0000;border-color:var(--red);color:var(--red);">OFF</button>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:6px;">যেকোনো সময় ON করলে Display-তে ছবিগুলো পুরো screen জুড়ে দেখাবে (live match / winner screen / break — যা-ই চলুক না কেন), পেছনে কিছুই দেখা যাবে না। একাধিক ছবি দিলে automatic next-next হয়ে বদলাবে। OFF করলে আগে যা চলছিল সেটা ফিরে আসবে।</div>
+
+        <input type="file" id="ad-img-input" accept="image/*" multiple onchange="handleAdImage(event)" style="width:100%;font-size:11px;color:var(--muted);margin-bottom:8px;">
+        <div id="ad-img-gallery" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <label style="font-size:11px;color:var(--muted);">প্রতি ছবি</label>
+          <input type="number" id="ad-rotate-sec" value="6" min="2" style="width:55px;padding:5px;background:#0b1c30;border:1px solid #22344e;border-radius:6px;color:#fff;text-align:center;">
+          <span style="font-size:11px;color:var(--muted);">সেকেন্ড পর পরের ছবি (একাধিক ছবি থাকলে)</span>
+        </div>
+
+        <div style="font-size:10px;color:var(--muted);margin-bottom:6px;">ক্যাপশন / Sponsor টেক্সট:</div>
+        <input type="text" id="ad-text" placeholder="ঐচ্ছিক ক্যাপশন / sponsor নাম" style="width:100%;padding:8px;background:#0b1c30;border:1px solid #22344e;border-radius:6px;color:#fff;font-size:12px;margin-bottom:8px;box-sizing:border-box;">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div>
+            <div style="font-size:9px;color:var(--muted);margin-bottom:3px;">Font</div>
+            <select id="ad-text-font" class="ssel" style="width:100%;font-size:11px;">
+              <option value="'Bebas Neue',sans-serif">Bebas Neue</option>
+              <option value="'Hind Siliguri',sans-serif">🅱️ Hind Siliguri</option>
+              <option value="'Noto Sans Bengali',sans-serif">🅱️ Noto Sans Bengali</option>
+              <option value="'Noto Serif Bengali',serif">🅱️ Noto Serif Bengali</option>
+              <option value="'Baloo Da 2',cursive">🅱️ Baloo Da 2</option>
+              <option value="'Tiro Bangla',serif">🅱️ Tiro Bangla</option>
+              <option value="'Galada',cursive">🅱️ Galada (Stylish)</option>
+              <option value="'Atma',cursive">🅱️ Atma (Handwriting)</option>
+              <option value="'Orbitron',sans-serif">Orbitron</option>
+              <option value="'Montserrat',sans-serif">Montserrat</option>
+              <option value="Arial,sans-serif">Arial</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--muted);margin-bottom:3px;">Size (px)</div>
+            <input type="number" id="ad-text-size" value="56" min="20" max="140" style="width:100%;padding:6px;background:#0b1c30;border:1px solid #22344e;border-radius:6px;color:#fff;text-align:center;">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:9px;color:var(--muted);">Color</span>
+            <input type="color" id="ad-text-color" value="#ffd700" style="width:34px;height:28px;border:none;border-radius:6px;cursor:pointer;background:none;">
+          </div>
+          <label style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;"><input type="checkbox" id="ad-text-bold" checked style="width:14px;height:14px;"> Bold</label>
+          <label style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);cursor:pointer;"><input type="checkbox" id="ad-text-italic" style="width:14px;height:14px;"> Italic</label>
+        </div>
+
+        <button class="mbtn-sec" onclick="updateAdOverlayContent()" style="width:100%;font-size:11px;">💾 Save Ad Content</button>
 
         <div style="height:1px;background:var(--border);margin:12px 0;"></div>
         <div class="mlbl2" style="margin-bottom:8px;">📢 Scrolling Ticker</div>
@@ -1579,7 +1638,8 @@ body{background:var(--bg);font-family:'Rajdhani',sans-serif;color:var(--white);m
   </div>
 </div>
 
-<div id="result-screen" style="display:none;"><div class="res-trophy">🏆</div><div class="res-winner" id="res-win">–</div><div class="res-margin" id="res-mar">–</div><div id="res-next-match" style="display:none;margin:16px auto 20px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:12px 20px;text-align:center;max-width:340px;"><div style="font-family:'Orbitron',sans-serif;font-size:8px;color:var(--accent);letter-spacing:3px;margin-bottom:8px;">📅 NEXT MATCH</div><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><span style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;" id="res-nm-a">–</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);">VS</span><span style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;" id="res-nm-b">–</span></div><div style="font-size:10px;color:var(--muted);margin-top:4px;" id="res-nm-meta"></div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;"><button class="btn-new" onclick="openSummary()" style="background:linear-gradient(135deg,#cc0000,#880000);border-color:#cc0000;color:#fff;">📋 Match Summary & PDF</button><button class="btn-new" onclick="goSetup()">+ NEW MATCH</button></div></div>
+<div id="result-screen" style="display:none;"><div class="res-trophy">🏆</div><div class="res-winner" id="res-win">–</div><div class="res-margin" id="res-mar">–</div><div id="res-next-match" style="display:none;margin:16px auto 20px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:12px 20px;text-align:center;max-width:340px;"><div style="font-family:'Orbitron',sans-serif;font-size:8px;color:var(--accent);letter-spacing:3px;margin-bottom:8px;">📅 NEXT MATCH</div><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><span style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;" id="res-nm-a">–</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);">VS</span><span style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;" id="res-nm-b">–</span></div><div style="font-size:10px;color:var(--muted);margin-top:4px;" id="res-nm-meta"></div></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;"><button class="btn-new" onclick="openSummary()" style="background:linear-gradient(135deg,#cc0000,#880000);border-color:#cc0000;color:#fff;">📋 Match Summary & PDF</button><button class="btn-new" onclick="goSetup()">+ NEW MATCH</button></div>
+</div>
 <div id="celebration"><div class="celeb-bg"></div><div class="conf-c" id="conf-c"></div><div class="celeb-inner"><div class="celeb-main" id="cel-txt">FOUR!</div><div class="celeb-sub" id="cel-sub"></div></div></div>
 <script>
 const SC_CFG_KEY='cricket_sc_fb_config',ACT_LIC='cricket_active_lic';
@@ -1812,6 +1872,7 @@ function loadTeam(n){
   // Firebase team
   const team=allTeamsData.find(t=>t.id===val);if(!team)return;
   document.getElementById('t'+n+'-name').value=team.name;
+  warnIfSameTeamNames(n, team.name);
   renderPlayerInputs(n,team.players||[]);
 }
 function renderPlayerInputs(n,players){
@@ -1835,6 +1896,7 @@ function startMatch(){
   const ov=parseInt(document.getElementById('overs-num').value)||20;
   const t1n=document.getElementById('t1-name').value||'Team A';
   const t2n=document.getElementById('t2-name').value||'Team B';
+  if(t1n.trim().toLowerCase()===t2n.trim().toLowerCase()){alert('⚠️ Team A ও Team B একই নাম হতে পারবে না! আলাদা দুটো দল select করুন।');return;}
   match={title:document.getElementById('match-title').value||'Match',maxOvers:ov,
     teams:[{name:t1n,logo:logoData[1]||null,emoji:'🏏',players:t1p},
            {name:t2n,logo:logoData[2]||null,emoji:'🏏',players:t2p}],
@@ -1913,6 +1975,7 @@ function actuallyStartMatch(){
   bcSend({t:'BREAK_HIDE'});
   bcSend({t:'TU_HIDE'});
   syncToDisplay({type:'resultEnd'});
+  if(_adOn){ _adOn=false; syncToDisplay({type:'ad', on:false}); const btn=document.getElementById('ad-toggle-btn'); if(btn){btn.textContent='OFF';btn.style.background='#2a0000';btn.style.borderColor='var(--red)';btn.style.color='var(--red)';} }
   renderAll();popSels();updSC();
 }
 
@@ -2158,6 +2221,92 @@ function wireCheckboxSync(){
   });
 }
 
+// ═══ Advertisement Full Screen Overlay (independent ON/OFF, works during live match, winner screen, break — anytime) ═══
+let _adImages = []; // array of base64 image strings
+let _adOn = false;
+
+function renderAdGallery(){
+  const gal = document.getElementById('ad-img-gallery');
+  gal.innerHTML = _adImages.map((src,idx)=>
+    '<div style="position:relative;">'+
+      '<img src="'+src+'" style="width:100%;height:60px;object-fit:cover;border-radius:6px;display:block;">'+
+      '<div onclick="removeAdImage('+idx+')" style="position:absolute;top:2px;right:2px;width:18px;height:18px;background:rgba(0,0,0,.75);border-radius:50%;color:#fff;font-size:11px;line-height:18px;text-align:center;cursor:pointer;">✕</div>'+
+    '</div>'
+  ).join('');
+}
+
+function removeAdImage(idx){
+  _adImages.splice(idx,1);
+  renderAdGallery();
+  if(_adOn) updateAdOverlayContent();
+}
+
+function handleAdImage(e){
+  const files = Array.from(e.target.files || []);
+  if(!files.length) return;
+  let pending = files.length;
+  files.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      const img = new Image();
+      img.onload = function(){
+        const canvas = document.createElement('canvas');
+        const maxW = 900;
+        const scale = Math.min(1, maxW/img.width);
+        canvas.width = Math.round(img.width*scale);
+        canvas.height = Math.round(img.height*scale);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        _adImages.push(canvas.toDataURL('image/jpeg',0.72));
+        renderAdGallery();
+        pending--;
+        if(pending===0 && _adOn) updateAdOverlayContent(); // if already ON, push new images immediately
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = ''; // allow re-selecting the same file(s) later
+}
+
+function getAdTextStyle(){
+  return {
+    color: document.getElementById('ad-text-color').value,
+    font: document.getElementById('ad-text-font').value,
+    size: parseInt(document.getElementById('ad-text-size').value,10) || 56,
+    bold: document.getElementById('ad-text-bold').checked,
+    italic: document.getElementById('ad-text-italic').checked
+  };
+}
+
+function updateAdOverlayContent(){
+  const text = (document.getElementById('ad-text').value || '').trim();
+  const rotateSec = parseInt(document.getElementById('ad-rotate-sec').value,10) || 6;
+  if(_adOn){
+    syncToDisplay({type:'ad', on:true, text: text, images: _adImages, rotateSec: rotateSec, style: getAdTextStyle()});
+  }
+}
+
+function toggleAdOverlay(){
+  _adOn = !_adOn;
+  const btn = document.getElementById('ad-toggle-btn');
+  const text = (document.getElementById('ad-text').value || '').trim();
+  const rotateSec = parseInt(document.getElementById('ad-rotate-sec').value,10) || 6;
+  if(_adOn){
+    btn.textContent = 'ON';
+    btn.style.background = '#062b0a';
+    btn.style.borderColor = 'var(--green)';
+    btn.style.color = 'var(--green)';
+    syncToDisplay({type:'ad', on:true, text: text, images: _adImages, rotateSec: rotateSec, style: getAdTextStyle()});
+  } else {
+    btn.textContent = 'OFF';
+    btn.style.background = '#2a0000';
+    btn.style.borderColor = 'var(--red)';
+    btn.style.color = 'var(--red)';
+    syncToDisplay({type:'ad', on:false});
+  }
+}
+
 function addRun(n){
   const i=inn();
   if(isOverLocked()){return;}// blocked — must end over first
@@ -2292,8 +2441,9 @@ function popSels(){
   ['s-sel','ns-sel'].forEach((id,idx)=>{
     document.querySelectorAll('#'+id).forEach(sel=>{
       const pv=sel.value;
+      const otherIdx = idx===0 ? i.ns : i.str; // whoever is already batting in the OTHER slot — exclude from this list
       sel.innerHTML='<option value="">'+(idx===0?'🏏 Striker':'🏃 Non-Striker')+'</option>'+
-        i.bat.filter(b=>!b.out).map(b=>'<option value="'+i.bat.indexOf(b)+'">'+b.name+'</option>').join('');
+        i.bat.filter(b=>!b.out).filter(b=>i.bat.indexOf(b)!==otherIdx).map(b=>'<option value="'+i.bat.indexOf(b)+'">'+b.name+'</option>').join('');
       if(pv!=='')sel.value=pv;
     });
   });
@@ -2309,8 +2459,18 @@ function syncSels(){
   document.querySelectorAll('#ns-sel').forEach(s=>{if(i.ns!==null)s.value=i.ns;});
   document.querySelectorAll('#bwl-sel').forEach(s=>{if(i.bi!==null)s.value=i.bi;});
 }
-function setStr(v){if(v==='')return;inn().str=parseInt(v);rendBat();}
-function setNS(v){if(v==='')return;inn().ns=parseInt(v);rendBat();}
+function setStr(v){
+  if(v==='')return;
+  const i=inn(),val=parseInt(v);
+  if(val===i.ns){alert('⚠️ Striker ও Non-Striker একই ব্যাটসম্যান হতে পারবে না!');popSels();return;}
+  i.str=val;rendBat();popSels();
+}
+function setNS(v){
+  if(v==='')return;
+  const i=inn(),val=parseInt(v);
+  if(val===i.str){alert('⚠️ Striker ও Non-Striker একই ব্যাটসম্যান হতে পারবে না!');popSels();return;}
+  i.ns=val;rendBat();popSels();
+}
 function setBwl(v){if(v==='')return;const i=inn();i.bi=parseInt(v);document.querySelectorAll('#bwl-sel').forEach(s=>s.value=v);rendBwl();}
 
 // WICKET
@@ -2728,6 +2888,14 @@ function loadExcelTeamTo(n, teamName) {
   document.getElementById('t' + n + '-name').value = teamName;
   renderPlayerInputs(n, players);
   document.getElementById('excel-status').textContent = `✅ "${teamName}" → টিম ${n}-এ লোড হয়েছে`;
+  warnIfSameTeamNames(n, teamName);
+}
+function warnIfSameTeamNames(n, name){
+  const other = n===1 ? 2 : 1;
+  const otherEl = document.getElementById('t'+other+'-name');
+  if(otherEl && otherEl.value.trim() && name.trim().toLowerCase()===otherEl.value.trim().toLowerCase()){
+    alert('⚠️ এই দলটাই আগে থেকে অন্য Team slot-এ আছে! Team A ও Team B আলাদা হতে হবে — এই match শুরু করা যাবে না যতক্ষণ না আলাদা দুটো দল select করছেন।');
+  }
 }
 
 function downloadExcelTemplate() {
@@ -3392,6 +3560,7 @@ function getBroadcastHTML() {
   h += '<meta charset="UTF-8">';
   h += '<title>Cricket Broadcast</title>';
   h += '<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Bebas+Neue&family=Anton&family=Oswald:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Teko:wght@400;600;700&family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400;1,700&family=Russo+One&family=Saira+Condensed:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">';
+  h += '<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;700;900&family=Noto+Serif+Bengali:wght@400;600;700&family=Baloo+Da+2:wght@400;500;600;700;800&family=Tiro+Bangla:ital@0;1&family=Galada&family=Atma:wght@400;500;600;700&display=swap" rel="stylesheet">';
   h += '<style>@font-face{font-family:"DSEG7";src:url("https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}@font-face{font-family:"DSEG7";src:url("https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;}</style>';
   h += '<style>';
   h += ':root{--bg:#07101f;--panel:#0c1628;--panel2:#111e34;--border:#1c3555;--accent:#00d4ff;--accent2:#0088bb;--gold:#ffd700;--green:#00e676;--red:#ff1744;--white:#eaf4ff;--muted:#3d5a7a;--four:#00bfff;--six:#ff6600;}';
@@ -4050,6 +4219,8 @@ function buildDisplayPayload(extra){
     fxTs: extra && extra.type==='fx' ? Date.now() : undefined,
     resultActive: extra && extra.type==='result' ? true : (extra && extra.type==='resultEnd' ? false : undefined),
     resultInfo: extra && extra.type==='result' ? extra.info : undefined,
+    adActive: extra && extra.type==='ad' ? !!extra.on : undefined,
+    adInfo: extra && extra.type==='ad' ? {text: extra.text||'', images: extra.images||[], rotateSec: extra.rotateSec||6, style: extra.style||{}} : undefined,
     displayStyle: extra && extra.type==='style' ? extra.style : undefined,
     displayFit: extra && extra.type==='fit' ? extra.fit : undefined,
     cardView: extra && extra.type==='cardView' ? extra.view : undefined,
@@ -4068,7 +4239,7 @@ function syncToDisplay(extra){
   if(!db || !match) return;
   // Instant, non-debounced events: these must NEVER be dropped by a later debounce-clear.
   // tuEnd / tuDecision / breakEnd / resultEnd / style / cardView all fire immediately.
-  const instantTypes = ['tu','tuEnd','tuDecision','break','breakEnd','result','resultEnd','style','cardView','fit','fx','bg','ticker','tickerStyle'];
+  const instantTypes = ['tu','tuEnd','tuDecision','break','breakEnd','result','resultEnd','ad','style','cardView','fit','fx','bg','ticker','tickerStyle'];
   if(extra && instantTypes.includes(extra.type)){
     const id = getOrCreateDisplayId();
     const payload = buildDisplayPayload(extra);
